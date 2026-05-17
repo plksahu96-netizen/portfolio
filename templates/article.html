@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ article.title }} — {{ profile.name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  {% include '_theme_init.html' %}
+</head>
+<body>
+  {% include '_navbar.html' %}
+
+  <article class="article-full">
+    <header class="article-full-header">
+      <a href="{{ url_for('blog') }}" class="back-link">&larr; All articles</a>
+      <ul class="category-tags">
+        {% for cat in article.categories %}
+        <li class="category-tag category-tag--{{ cat | lower | replace(' ', '-') }}">{{ cat }}</li>
+        {% endfor %}
+      </ul>
+      <h1>{{ article.title }}</h1>
+      <div class="article-full-meta">
+        <time datetime="{{ article.date }}">{{ article.date }}</time>
+        <span class="read-time">{{ article.read_time }} min read</span>
+      </div>
+    </header>
+
+    <div class="article-full-body">
+      {% for paragraph in article.content %}
+      <p>{{ paragraph }}</p>
+      {% endfor %}
+    </div>
+  </article>
+
+  <footer>
+    <p>&copy; {{ profile.name }}. Built with Python &amp; Flask.</p>
+  </footer>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+</html>
